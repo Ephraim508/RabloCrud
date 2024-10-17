@@ -1,45 +1,39 @@
-
 import { createStore } from 'redux';
-const initialState={
-    todos:[
+
+const todosReducer = (state = {
+    todos: [
         {
-            todo:"Hello",
-            todoId:1
+            todo: "Hello",
+            todoId: 1
         }
     ]
-}
-
-
-
-const todosReducer=(state=initialState,action)=>{
+}, action) => {
     switch (action.type) {
         case 'ADD_TODO':
-          return {
-            ...state,
-            todos: [...state.todos, action.payload]
-          };
-          case 'DELETE_TODO':
             return {
-              ...state,
-              todos: state.todos.filter(todo => todo.todoId !== action.payload.todoId)
+                ...state,
+                todos: [...state.todos, action.payload]
             };
-            case 'UPDATE_TODO':
-                return {
-                    ...state,
-                    todos: state.todos.map(todo =>
-                        todo.todoId === action.payload.todoId
-                            ? { ...todo, todo: action.payload.todo }
-                            : todo
-                    ),
-                };
-          default:
+        case 'DELETE_TODO':
+            return {
+                ...state,
+                todos: state.todos.filter(todo => todo.todoId !== action.payload.todoId)
+            };
+        case 'UPDATE_TODO':
+            return {
+                ...state,
+                todos: state.todos.map(todo =>
+                    todo.todoId === action.payload.todoId
+                        ? { ...todo, todo: action.payload.todo }
+                        : todo
+                ),
+            };
+        default:
             return state;
-        }
-}
+    }
+};
 
-
-
-const store=createStore(todosReducer)
-
+const store = createStore(todosReducer);
 
 export default store;
+
